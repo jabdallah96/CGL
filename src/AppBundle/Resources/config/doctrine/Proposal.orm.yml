@@ -1,0 +1,29 @@
+# src/AppBundle/Resources/config/doctrine/Proposal.orm.yml
+AppBundle\Entity\Proposal:
+
+    type: entity
+    table: proposal
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        number:
+            type: string
+            length: 45
+        createdAt:
+            type: datetime
+
+    oneToOne:
+        client:
+            targetEntity: Client
+            inversedBy: proposal
+            joinColumn:
+                name: client_id
+                referencedColumnName: id
+        job:
+            targetEntity: Job
+            inversedBy: proposal
+            joinColumn:
+                name: job_id
+                referencedColumnName: id

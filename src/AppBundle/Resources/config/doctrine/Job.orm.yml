@@ -1,0 +1,34 @@
+# src/AppBundle/Resources/config/doctrine/Job.orm.yml
+AppBundle\Entity\Job:
+
+    type: entity
+    table: job
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        number:
+            type: integer
+        delivery:
+            type: datetime
+        billOfQuantities:
+            type: blob
+        createdAt:
+            type: datetime
+        updatedAt:
+            type: datetime
+
+    oneToOne:
+            vehicle:
+                targetEntity: Vehicle
+                inversedBy: proposal
+                joinColumn:
+                    name: vehicle_id
+                    referencedColumnName: vin
+            jor:
+                targetEntity: JobOpeningRequest
+                inversedBy: proposal
+                joinColumn:
+                    name: jor_id
+                    referencedColumnName: id

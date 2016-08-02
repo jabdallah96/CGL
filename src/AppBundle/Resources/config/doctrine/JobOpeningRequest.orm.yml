@@ -1,0 +1,91 @@
+# src/AppBundle/Resources/config/doctrine/JobOpeningRequest.orm.yml
+AppBundle\Entity\JobOpeningRequest:
+
+    type: entity
+    table: jor
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        jortype:
+            type: string
+            length: 45
+        quantity:
+            type: string
+            length: 45
+        flooring:
+            type: string
+            length: 45
+        panelThickness:
+            type: string
+            length: 45
+        light:
+            type: string
+            length: 45
+        insideSkin:
+            type: string
+            length: 45
+        externalSkin:
+            type: string
+            length: 45
+        length:
+            type: decimal
+        width:
+            type: decimal
+        height:
+            type: decimal
+        jpartition:
+            type: string
+            length: 45
+        rearDoors:
+            type: string
+            length: 45
+        rightDoors:
+            type: string
+            length: 45
+        leftDoors:
+            type: string
+            length: 45
+        pvcCurtain:
+            type: boolean
+        curtainLoc:
+            type: string
+            length: 45
+        mudGuard:
+            type: boolean
+        frontDefence:
+            type: boolean
+        beltRetail:
+            type: boolean
+        toolbox:
+            type: boolean
+        sideSkirts:
+            type: boolean
+        reinforcement:
+            type: boolean
+        reinforcementLoc:
+            type: string
+            length: 45
+        coolingUnit:
+            type: boolean
+        unitType:
+            type: string
+            length: 45
+        lift:
+            type: boolean
+        liftLoc:
+            type: string
+            length: 45
+        accesories:
+            type: boolean
+        accesoriesType:
+            type: string
+            length: 45
+        notes:
+            type: string
+            length: 200
+        createdAt:
+            type: datetime
+        updatedAt:
+            type: datetime

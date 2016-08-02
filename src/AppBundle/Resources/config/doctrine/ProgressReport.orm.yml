@@ -1,0 +1,23 @@
+# src/AppBundle/Resources/config/doctrine/ProgressReport.orm.yml
+AppBundle\Entity\ProgressReport:
+
+    type: entity
+    table: progressReport
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        comments:
+            type: string
+            length: 200
+        date:
+            type: datetime
+
+    manyToOne:
+            artist:
+                targetEntity: User
+                inversedBy: progressReport
+                joinColumn:
+                    name: user_id
+                    referencedColumnName: id

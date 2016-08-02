@@ -1,0 +1,25 @@
+# src/AppBundle/Resources/config/doctrine/User.orm.yml
+AppBundle\Entity\User:
+
+    type: entity
+    table: user
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        username:
+            type: string
+            length: 50
+        password:
+            type: string
+            length: 8
+        email:
+            type: string
+            length: 50
+
+    oneToMany:
+            progressReport:
+                targetEntity: ProgressReport
+                mappedBy: user
+                cascade: [persist]

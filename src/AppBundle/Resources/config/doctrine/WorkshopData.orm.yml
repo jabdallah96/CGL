@@ -1,0 +1,26 @@
+# src/AppBundle/Resources/config/doctrine/WorkshopData.orm.yml
+AppBundle\Entity\WorkshopData:
+
+    type: entity
+    table: workshopData
+
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+
+    fields:
+        shopdrawing:
+            type: blob
+        partsRequest:
+            type: blob
+        addedAt:
+            type: datetime
+
+    oneToOne:
+            job:
+                targetEntity: Job
+                inversedBy: workshopData
+                joinColumn:
+                    name: job_id
+                    referencedColumnName: id
