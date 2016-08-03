@@ -138,4 +138,62 @@ class Proposal
     {
         return $this->job;
     }
+    /**
+     * @var string
+     */
+    private $proposalDoc;
+
+
+    /**
+     * Set proposalDoc
+     *
+     * @param string $proposalDoc
+     *
+     * @return Proposal
+     */
+    public function setProposalDoc($proposalDoc)
+    {
+        $this->proposalDoc = $proposalDoc;
+
+        return $this;
+    }
+
+    /**
+     * Get proposalDoc
+     *
+     * @return string
+     */
+    public function getProposalDoc()
+    {
+        return $this->proposalDoc;
+    }
+    /**
+     * @var int
+     */
+    private $status;
+
+
+    /**
+     * Set status
+     *
+     * @param \int $status
+     *
+     * @return Proposal
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return \int
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
 }

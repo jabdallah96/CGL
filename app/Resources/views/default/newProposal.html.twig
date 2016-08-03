@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <img src="{{ asset('bundles/logo/logo.png') }}" id="logo"/>
+
+    <div id="wrapper">
+        <div id="container">
+            <br>
+            <button type="button" class="btn btn-default" onclick="window.location.href='http://127.0.0.1:8000/index'" style="margin-left: 10px">
+                <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
+                Cancel
+            </button>
+            <div>
+                {{ form_start(form) }}
+                    <div>
+                        {{ form_row(form.number) }}
+                    </div>
+                    <div>
+                        {{ form_row(form.status) }}
+                    </div>
+                    <div>
+                        {{ form_row(form.proposal_doc) }}
+                    </div>
+                    <div>
+                        {{ form_row(form.submit) }}
+                    </div>
+
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+
+{% endblock %}

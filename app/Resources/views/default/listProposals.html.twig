@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h3>Pending Proposals</h3>
+    <table id="pending">
+
+        {% for proposal in pending %}
+            <tr>
+                <td style="padding-left: 20px">{{ proposal.number }}</td>
+                {#Each proposal name needs to link to the edit proposal page (based off the proposal form?)#}
+            </tr>
+        {% endfor %}
+
+    </table>
+
+    <div style="padding-bottom: 30px">
+        <h3>Approved Proposals</h3>
+        <table id="approved" >
+
+            {% for test in approved %}
+                <tr>
+                    <td style="padding-left: 20px">{{ test.number }}</td>
+                </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+
+    <div id="add-proposal">
+        <button type="button" class="btn btn-default" onclick="window.location.href='http://127.0.0.1:8000/proposal/new'">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            New proposal
+        </button>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}

@@ -2,6 +2,7 @@
 AppBundle\Entity\Proposal:
 
     type: entity
+    repositoryClass: AppBundle\Entity\ProposalRepository
     table: proposal
     id:
         id:
@@ -13,6 +14,11 @@ AppBundle\Entity\Proposal:
             length: 45
         createdAt:
             type: datetime
+        proposalDoc:
+            type: blob
+            nullable: TRUE
+        status:
+            type: integer
 
     oneToOne:
         client:
