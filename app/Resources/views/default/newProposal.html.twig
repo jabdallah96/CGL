@@ -13,13 +13,23 @@
             <div>
                 {{ form_start(form) }}
                     <div>
+                        {{ form_row(form.client) }}
+                        <div id="add-client">
+                            <button type="button" class="btn btn-default" onclick="window.location.href='http://127.0.0.1:8000/client/new'">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                New client
+                            </button>
+                        </div>
+                    </div>
+                    <br>
+                    <div>
                         {{ form_row(form.number) }}
                     </div>
                     <div>
                         {{ form_row(form.status) }}
                     </div>
                     <div>
-                        {{ form_row(form.proposal_doc) }}
+                        {{ form_row(form.proposalName) }}
                     </div>
                     <div>
                         {{ form_row(form.submit) }}

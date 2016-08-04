@@ -27,6 +27,9 @@ h2 {
 
 }
 
+
+
+
 #pending, #approved{
     background: #F9F9F9;
     width: 100%;
@@ -44,8 +47,12 @@ form{
     padding: 30px;
 }
 
-#proposal_submit{
-    margin-left: 50%;
+#proposal_client{
+    margin-top: 20px;
+}
+
+#proposal_submit, #client_submit{
+    margin-left: 47%;
     width: 100px;
 }
 
@@ -87,9 +94,10 @@ td {
     -moz-border-radius: 4px;
     border:1px solid #ddd;
     margin-top: 30px;
-    margin-left: 0px;
     width: 95%;
     margin-left:45px;
+    margin-bottom: 30px;
+
 }
 
 

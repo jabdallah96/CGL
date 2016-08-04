@@ -254,4 +254,93 @@ class Client
     {
         return $this->updatedAt;
     }
+    /**
+     * @var string
+     */
+    private $name;
+
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Client
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+    /**
+     * @var \AppBundle\Entity\Proposal
+     */
+    private $proposal;
+
+
+    /**
+     * Set proposal
+     *
+     * @param \AppBundle\Entity\Proposal $proposal
+     *
+     * @return Client
+     */
+    public function setProposal(\AppBundle\Entity\Proposal $proposal = null)
+    {
+        $this->proposal = $proposal;
+
+        return $this;
+    }
+
+    /**
+     * Get proposal
+     *
+     * @return \AppBundle\Entity\Proposal
+     */
+    public function getProposal()
+    {
+        return $this->proposal;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->proposal = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add proposal
+     *
+     * @param \AppBundle\Entity\Proposal $proposal
+     *
+     * @return Client
+     */
+    public function addProposal(\AppBundle\Entity\Proposal $proposal)
+    {
+        $this->proposal[] = $proposal;
+
+        return $this;
+    }
+
+    /**
+     * Remove proposal
+     *
+     * @param \AppBundle\Entity\Proposal $proposal
+     */
+    public function removeProposal(\AppBundle\Entity\Proposal $proposal)
+    {
+        $this->proposal->removeElement($proposal);
+    }
 }

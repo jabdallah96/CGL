@@ -1,12 +1,42 @@
 <?php
 
 namespace AppBundle\Entity;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 
 /**
  * Proposal
+ * @Vich\Uploadable
  */
 class Proposal
 {
+
+    private $proposalFile;
+
+    public function setProposalFile(File $proposal = null)
+    {
+        $this->proposalFile = $proposal;
+
+        if ($proposal) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTime('now');
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return File
+     */
+    public function getDocumentFile()
+    {
+        return $this->proposalFile;
+    }
+
+
+
     /**
      * @var integer
      */
@@ -91,25 +121,15 @@ class Proposal
     private $job;
 
 
-    /**
-     * Set client
-     *
-     * @param \AppBundle\Entity\Client $client
-     *
-     * @return Proposal
-     */
-    public function setClient(\AppBundle\Entity\Client $client = null)
+
+    public function setClient(\AppBundle\Entity\Client $client)
     {
         $this->client = $client;
 
         return $this;
     }
 
-    /**
-     * Get client
-     *
-     * @return \AppBundle\Entity\Client
-     */
+
     public function getClient()
     {
         return $this->client;
@@ -138,35 +158,7 @@ class Proposal
     {
         return $this->job;
     }
-    /**
-     * @var string
-     */
-    private $proposalDoc;
 
-
-    /**
-     * Set proposalDoc
-     *
-     * @param string $proposalDoc
-     *
-     * @return Proposal
-     */
-    public function setProposalDoc($proposalDoc)
-    {
-        $this->proposalDoc = $proposalDoc;
-
-        return $this;
-    }
-
-    /**
-     * Get proposalDoc
-     *
-     * @return string
-     */
-    public function getProposalDoc()
-    {
-        return $this->proposalDoc;
-    }
     /**
      * @var int
      */
@@ -195,5 +187,38 @@ class Proposal
     public function getStatus()
     {
         return $this->status;
+    }
+
+
+
+
+    /**
+     * @var string
+     */
+    private $proposalName;
+
+
+    /**
+     * Set proposalName
+     *
+     * @param string $proposalName
+     *
+     * @return Proposal
+     */
+    public function setProposalName($proposalName)
+    {
+        $this->proposalName = $proposalName;
+
+        return $this;
+    }
+
+    /**
+     * Get proposalName
+     *
+     * @return string
+     */
+    public function getProposalName()
+    {
+        return $this->proposalName;
     }
 }

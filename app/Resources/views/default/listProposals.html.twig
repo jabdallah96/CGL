@@ -7,7 +7,9 @@
 
         {% for proposal in pending %}
             <tr>
-                <td style="padding-left: 20px">{{ proposal.number }}</td>
+                <td style="padding-left: 20px">
+                    <a href="{{ path('proposal_view', {'proposal_id': proposal.id}) }}">{{ proposal.number }}</a>
+                </td>
                 {#Each proposal name needs to link to the edit proposal page (based off the proposal form?)#}
             </tr>
         {% endfor %}
@@ -18,9 +20,9 @@
         <h3>Approved Proposals</h3>
         <table id="approved" >
 
-            {% for test in approved %}
+            {% for proposal2 in approved %}
                 <tr>
-                    <td style="padding-left: 20px">{{ test.number }}</td>
+                    <td style="padding-left: 20px">{{ proposal2.number }}</td>
                 </tr>
             {% endfor %}
 

@@ -8,6 +8,9 @@ AppBundle\Entity\Client:
             type: integer
             generator: { strategy: AUTO }
     fields:
+        name:
+            type: string
+            length: 45
         phone:
             type: string
             length: 45
@@ -27,3 +30,12 @@ AppBundle\Entity\Client:
             type: datetime
         updatedAt:
             type: datetime
+            nullable: TRUE
+
+    oneToMany:
+        proposal:
+            targetEntity: Proposal
+            mappedBy: client
+            joinColumn:
+                name: proposal_id
+                referencedColumnName: id
