@@ -17,15 +17,20 @@ AppBundle\Entity\Client:
         fax:
             type: string
             length: 45
+            nullable: TRUE
         financeNumber:
             type: integer
+            nullable: TRUE
         contactPerson:
             type: string
             length: 45
+            nullable: TRUE
         mobile:
             type: string
+            nullable: TRUE
         accContact:
             type: string
+            nullable: TRUE
         createdAt:
             type: datetime
         updatedAt:

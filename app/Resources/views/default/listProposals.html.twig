@@ -22,7 +22,9 @@
 
             {% for proposal2 in approved %}
                 <tr>
-                    <td style="padding-left: 20px">{{ proposal2.number }}</td>
+                    <td style="padding-left: 20px">
+                        <a href="{{ path('proposal_view', {'proposal_id': proposal2.id}) }}">{{ proposal2.number }}</a>
+                    </td>
                 </tr>
             {% endfor %}
 
@@ -30,10 +32,17 @@
     </div>
 
     <div id="add-proposal">
-        <button type="button" class="btn btn-default" onclick="window.location.href='http://127.0.0.1:8000/proposal/new'">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-            New proposal
-        </button>
+
+        <div class="btn-group" role="group" aria-label="...">
+            <button type="button" class="btn btn-default" onclick="window.location.href='http://127.0.0.1:8000/proposal/new'" style="width: 167px">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                New proposal
+            </button>
+            <button type="button" class="btn btn-default" onclick="window.location.href='http://127.0.0.1:8000/client/new'" style="width: 167px">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                New client
+            </button>
+        </div>
     </div>
 
 {% endblock %}

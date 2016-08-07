@@ -10,17 +10,42 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Proposal;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use AppBundle\Form\ProposalType;
-
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 
 
 
 class ProposalController extends Controller
 {
+
+    /**
+     * @Route("/download/{proposal_id}", name="proposal_download")
+     * @ParamConverter("proposal", class="AppBundle:Proposal", options={"id" = "proposal_id"})
+     */
+    public function downloadProposalsAction(Request $request, Proposal $proposal)
+    {
+        if (!$proposal) {
+            throw $this->createNotFoundException('Unable to find Proposal entity.');
+        }
+
+        $headers = array(
+            'Content-Disposition' => 'attachment; filename="'.$proposal->getProposalName().'"'
+        );
+
+        $filename = $this->getParameter('proposals_directory').'/'.$proposal->getProposalName();
+
+        return new Response(file_get_contents($filename), 200, $headers);
+
+    }
+
+
     /**
      * @Route("/proposal", name="proposal_list")
      */
@@ -29,10 +54,10 @@ class ProposalController extends Controller
         $em = $this->getDoctrine()->getManager();
         $proposalsPending = $em->getRepository('AppBundle\Entity\Proposal')->displayProposalByStatus(0);
         $proposalsApproved = $em->getRepository('AppBundle\Entity\Proposal')->displayProposalByStatus(1);
-        dump($proposalsApproved);
         return $this->render('default/listProposals.html.twig',
             ['pending' => $proposalsPending , 'approved' => $proposalsApproved]);
     }
+
 
     /**
      * @Route("/proposal/new", name="proposal_new")
@@ -43,34 +68,51 @@ class ProposalController extends Controller
         $form = $this->createForm(ProposalType::class, $proposal);
         $form->handleRequest($request);
 
-        if ($request->isMethod('post')) {
-            if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $proposal->setCreatedAt(date_create());
+
+            if($proposal->getProposalName()){
+                $file = $proposal->getProposalName();
+                $fileName = $this->get('app.proposal_uploader')->upload($file);
+
+                $proposal->setProposalName($fileName);
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($proposal);
             $em->flush();
             return $this->redirectToRoute('homepage');
         }
-        }
 
         return $this->render('default/newProposal.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form->createView(), 'proposal' =>[]
         ]);
 
     }
 
+
     /**
      * @Route("/proposal/{proposal_id}", name="proposal_view")
+     * @ParamConverter("proposalIndividual", class="AppBundle:Proposal", options={"id" = "proposal_id"})
      */
-    public function viewProposalAction(Request $request, $proposal_id)
+    public function viewProposalAction(Request $request, Proposal $proposalIndividual)
     {
-        $em = $this->getDoctrine()->getManager();
-        $proposalIndividual = $em->getRepository('AppBundle:Proposal')->find($proposal_id);
+
+        if($proposalIndividual->getProposalName()){
+            $proposalIndividual->setProposalName(
+                new File($this->getParameter('proposals_directory').'/'.$proposalIndividual->getProposalName())
+            );
+        }
 
         $form = $this->createForm(ProposalType::class, $proposalIndividual);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $file = $proposalIndividual->getProposalName();
+            $fileName = $this->get('app.proposal_uploader')->upload($file);
+
+            $proposalIndividual->setProposalName($fileName);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($proposalIndividual);
             $em->flush();
@@ -78,7 +120,7 @@ class ProposalController extends Controller
         }
 
         return $this->render('default/newProposal.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form->createView(), 'proposal' => $proposalIndividual
         ]);
 
     }

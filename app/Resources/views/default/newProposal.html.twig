@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <img src="{{ asset('bundles/logo/logo.png') }}" id="logo"/>
+    <img src="{{ asset('bundles/logo/logo.png') }}" onclick="window.location.href='http://127.0.0.1:8000/index'"  id="logo"/>
 
     <div id="wrapper">
         <div id="container">
             <br>
-            <button type="button" class="btn btn-default" onclick="window.location.href='http://127.0.0.1:8000/index'" style="margin-left: 10px">
+            <button type="button" class="btn btn-default" onclick="window.location.href='http://127.0.0.1:8000/index'" style="margin-left: 30px">
                 <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
                 Cancel
             </button>
@@ -14,14 +14,25 @@
                 {{ form_start(form) }}
                     <div>
                         {{ form_row(form.client) }}
-                        <div id="add-client">
-                            <button type="button" class="btn btn-default" onclick="window.location.href='http://127.0.0.1:8000/client/new'">
-                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                New client
+
+                        {% if proposal == null %}
+                            <div id="add-client">
+                                <button type="button" class="btn btn-default" id="new-client" onclick="window.location.href= '{{ path('client_new') }}' ">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                    New client
+                                </button>
+                            </div>
+                        {% else %}
+                            <button type="button" class="btn btn-default" id="new-client" onclick="window.location.href= '{{ path('client_view', {'client_id' : 1 , 'proposal_id': proposal.id} ) }}' ">
+                                {#need to fetch proper client id#}
+                                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                View
                             </button>
-                        </div>
+                        {% endif %}
                     </div>
+
                     <br>
+
                     <div>
                         {{ form_row(form.number) }}
                     </div>
@@ -30,6 +41,16 @@
                     </div>
                     <div>
                         {{ form_row(form.proposalName) }}
+
+                        {% if proposal and proposal.proposalName %}
+                            <a href="{{ asset('/download/')}}{{ proposal.id }}" style="padding-left: 30px">
+                                <button type="button" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+                                    View existing file
+                                </button>
+                            </a>
+                        {% endif %}
+
                     </div>
                     <div>
                         {{ form_row(form.submit) }}
@@ -43,6 +64,5 @@
 {% endblock %}
 
 {% block javascripts %}
-
 
 {% endblock %}

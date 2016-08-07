@@ -10,25 +10,36 @@ use Symfony\Component\HttpFoundation\File\File;
 class Proposal
 {
 
+
+    private $proposalName;
+
+
+
+    public function setProposalName($proposalName)
+    {
+        $this->proposalName = $proposalName;
+
+        return $this;
+    }
+
+
+    public function getProposalName()
+    {
+        return $this->proposalName;
+    }
+
     private $proposalFile;
 
     public function setProposalFile(File $proposal = null)
     {
         $this->proposalFile = $proposal;
 
-        if ($proposal) {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
-            $this->updatedAt = new \DateTime('now');
-        }
 
         return $this;
     }
 
-    /**
-     * @return File
-     */
-    public function getDocumentFile()
+
+    public function getProposalFile()
     {
         return $this->proposalFile;
     }
@@ -190,33 +201,5 @@ class Proposal
 
 
 
-    /**
-     * @var string
-     */
-    private $proposalName;
 
-
-    /**
-     * Set proposalName
-     *
-     * @param string $proposalName
-     *
-     * @return Proposal
-     */
-    public function setProposalName($proposalName)
-    {
-        $this->proposalName = $proposalName;
-
-        return $this;
-    }
-
-    /**
-     * Get proposalName
-     *
-     * @return string
-     */
-    public function getProposalName()
-    {
-        return $this->proposalName;
-    }
 }

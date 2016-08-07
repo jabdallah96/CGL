@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <img src="{{ asset('bundles/logo/logo.png') }}" id="logo"/>
+    <img src="{{ asset('bundles/logo/logo.png') }}" onclick="window.location.href='http://127.0.0.1:8000/index'"  id="logo"/>
 
     <div id="wrapper">
         <div id="container">
             <br>
-            <button type="button" class="btn btn-default" onclick="window.location.href='http://127.0.0.1:8000/proposal/new'" style="margin-left: 10px">
+            <button type="button" class="btn btn-default" onclick="history.go(-1);" style="margin-left: 30px">
                 <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
                 Cancel
             </button>
@@ -31,6 +31,7 @@
                 </div><div>
                     {{ form_row(form.accContact) }}
                 </div>
+
                 <div>
                     {{ form_row(form.submit) }}
                 </div>
