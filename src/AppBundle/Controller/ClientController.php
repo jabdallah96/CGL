@@ -23,9 +23,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class ClientController extends Controller
 {
     /**
-     * @Route("/client/new", name="client_new")
+     * @Route("/client/new=?{origin}", defaults={"origin" = null}, name="client_new")
      */
-    public function newClientAction(Request $request)
+    public function newClientAction(Request $request, $origin)
     {
         $client = new Client();
         $form = $this->createForm(ClientType::class, $client);
@@ -36,8 +36,10 @@ class ClientController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($client);
             $em->flush();
+            if($origin == "index"){
+                return $this->redirectToRoute('homepage');
+            }
             return $this->redirectToRoute('proposal_new');
-            //Need to have this redirect to index when approached from index
         }
 
         return $this->render('default/newClient.html.twig', [
@@ -50,7 +52,7 @@ class ClientController extends Controller
      * @Route("/client/{client_id}/{proposal_id}", name="client_view")
      * @ParamConverter("client", class="AppBundle:Client", options={"id" = "client_id"})
      */
-    public function viewProposalAction(Request $request, Client $client, $proposal_id)
+    public function viewClientAction(Request $request, Client $client, $proposal_id)
     {
 
         $form = $this->createForm(ClientType::class, $client);
@@ -60,7 +62,7 @@ class ClientController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($client);
             $em->flush();
-            return $this->redirectToRoute('proposal_view' , ['proposal_id' => $proposal_id]) ;
+            return $this->redirectToRoute('proposal_edit' , ['proposal_id' => $proposal_id]) ;
         }
 
             return $this->render('default/newClient.html.twig', [

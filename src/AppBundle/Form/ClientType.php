@@ -3,6 +3,7 @@ namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,13 +18,14 @@ class ClientType extends AbstractType
     {
         $builder
             //Need to add client, should I add the option to choose from existing? If so, how should I make it look alongside the create client form
-            ->add('name', TextType::class)
-            ->add('phone', NumberType::class)
-            ->add('fax', NumberType::class, ['required' => false ])
-            ->add('financeNumber', NumberType::class , ['required' => false ])
-            ->add('contactPerson', TextType::class, ['required' => false ])
-            ->add('mobile', NumberType::class, ['required' => false ])
-            ->add('accContact', TextType::class, array('label' => 'Acc. Contact' , 'required' => false))
+            ->add('name', TextType::class, ['label' => 'Client Name'])
+            ->add('contactPerson', TextType::class, ['required' => false , 'label' => 'Contact Name'])
+            ->add('phone', TextType::class, ['label' => 'Office Number'])
+            ->add('ext', NumberType::class, ['required' => false , 'label' => 'Ext.'])
+            ->add('fax', NumberType::class, ['required' => false , 'label' => 'Fax Number' ])
+            ->add('mobile', NumberType::class, ['required' => false , 'label' => 'Mobile Number' ])
+            ->add('email', EmailType::class , ['required' => false ])
+            ->add('delContact', TextType::class, array('label' => 'Delegated Contact' , 'required' => false))
             ->add('submit', SubmitType::class, array('label' => 'Submit'))
         ;
 

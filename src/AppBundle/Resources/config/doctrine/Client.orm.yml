@@ -14,12 +14,15 @@ AppBundle\Entity\Client:
         phone:
             type: string
             length: 45
+        ext:
+            type: integer
+            nullable: TRUE
         fax:
             type: string
             length: 45
             nullable: TRUE
-        financeNumber:
-            type: integer
+        email:
+            type: string
             nullable: TRUE
         contactPerson:
             type: string
@@ -28,7 +31,7 @@ AppBundle\Entity\Client:
         mobile:
             type: string
             nullable: TRUE
-        accContact:
+        delContact:
             type: string
             nullable: TRUE
         createdAt:

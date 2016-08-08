@@ -23,10 +23,10 @@
                                 </button>
                             </div>
                         {% else %}
-                            <button type="button" class="btn btn-default" id="new-client" onclick="window.location.href= '{{ path('client_view', {'client_id' : 1 , 'proposal_id': proposal.id} ) }}' ">
+                            <button type="button" class="btn btn-default" id="new-client" onclick="window.location.href= '{{ path('client_view', {'client_id' : proposal.client.id , 'proposal_id': proposal.id} ) }}' ">
                                 {#need to fetch proper client id#}
                                 <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-                                View
+                                View Current
                             </button>
                         {% endif %}
                     </div>
@@ -34,7 +34,10 @@
                     <br>
 
                     <div>
-                        {{ form_row(form.number) }}
+                        {{ form_row(form.series) }}
+                    </div>
+                    <div>
+                        {{ form_row(form.type) }}
                     </div>
                     <div>
                         {{ form_row(form.status) }}

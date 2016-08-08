@@ -343,4 +343,91 @@ class Client
     {
         $this->proposal->removeElement($proposal);
     }
+    /**
+     * @var integer
+     */
+    private $ext;
+
+    /**
+     * @var string
+     */
+    private $email;
+
+    /**
+     * @var string
+     */
+    private $delContact;
+
+
+    /**
+     * Set ext
+     *
+     * @param integer $ext
+     *
+     * @return Client
+     */
+    public function setExt($ext)
+    {
+        $this->ext = $ext;
+
+        return $this;
+    }
+
+    /**
+     * Get ext
+     *
+     * @return integer
+     */
+    public function getExt()
+    {
+        return $this->ext;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return Client
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set delContact
+     *
+     * @param string $delContact
+     *
+     * @return Client
+     */
+    public function setDelContact($delContact)
+    {
+        $this->delContact = $delContact;
+
+        return $this;
+    }
+
+    /**
+     * Get delContact
+     *
+     * @return string
+     */
+    public function getDelContact()
+    {
+        return $this->delContact;
+    }
 }

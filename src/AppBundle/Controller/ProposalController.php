@@ -13,6 +13,7 @@ use AppBundle\Entity\Proposal;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use AppBundle\Form\ProposalType;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -69,14 +70,14 @@ class ProposalController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $proposal->setCreatedAt(date_create());
+
+            $proposal->setUpdatedAt(date_create());
 
             if($proposal->getProposalName()){
-                $file = $proposal->getProposalName();
-                $fileName = $this->get('app.proposal_uploader')->upload($file);
-
+                $fileName = $this->get('app.proposal_uploader')->upload($proposal->getProposalName());
                 $proposal->setProposalName($fileName);
             }
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($proposal);
             $em->flush();
@@ -89,29 +90,42 @@ class ProposalController extends Controller
 
     }
 
-
     /**
      * @Route("/proposal/{proposal_id}", name="proposal_view")
-     * @ParamConverter("proposalIndividual", class="AppBundle:Proposal", options={"id" = "proposal_id"})
+     * @ParamConverter("proposal", class="AppBundle:Proposal", options={"id" = "proposal_id"})
      */
-    public function viewProposalAction(Request $request, Proposal $proposalIndividual)
+    public function viewProposalAction(Request $request, Proposal $proposal)
     {
 
-        if($proposalIndividual->getProposalName()){
-            $proposalIndividual->setProposalName(
-                new File($this->getParameter('proposals_directory').'/'.$proposalIndividual->getProposalName())
-            );
-        }
+        return $this->render('default/newProposal.html.twig', [
+        ]);
+
+    }
+
+
+
+    /**
+     * @Route("/proposal/edit/{proposal_id}", name="proposal_edit")
+     * @ParamConverter("proposalIndividual", class="AppBundle:Proposal", options={"id" = "proposal_id"})
+     */
+    public function editProposalAction(Request $request, Proposal $proposalIndividual)
+    {
+
+
 
         $form = $this->createForm(ProposalType::class, $proposalIndividual);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $file = $proposalIndividual->getProposalName();
-            $fileName = $this->get('app.proposal_uploader')->upload($file);
+            $proposalIndividual->setUpdatedAt(date_create());
 
-            $proposalIndividual->setProposalName($fileName);
+
+            if($proposalIndividual->getProposalName() && $proposalIndividual->getProposalName() instanceof UploadedFile){
+                $fileName = $this->get('app.proposal_uploader')->upload($proposalIndividual->getProposalName());
+                $proposalIndividual->setProposalName($fileName);
+            }
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($proposalIndividual);

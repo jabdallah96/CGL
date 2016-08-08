@@ -61,6 +61,11 @@ class Proposal
      */
     private $createdAt;
 
+    public function __construct()
+    {
+        $this->createdAt = date_create();
+    }
+
 
     /**
      * Get id
@@ -202,4 +207,62 @@ class Proposal
 
 
 
+    /**
+     * @var \DateTime
+     */
+    private $approvedAt;
+
+
+    /**
+     * Set approvedAt
+     *
+     * @param \DateTime $approvedAt
+     *
+     * @return Proposal
+     */
+    public function setApprovedAt($approvedAt)
+    {
+        $this->approvedAt = $approvedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get approvedAt
+     *
+     * @return \DateTime
+     */
+    public function getApprovedAt()
+    {
+        return $this->approvedAt;
+    }
+    /**
+     * @var \DateTime
+     */
+    private $updatedAt;
+
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Proposal
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
 }

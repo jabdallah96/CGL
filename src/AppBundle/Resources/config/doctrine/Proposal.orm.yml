@@ -9,11 +9,18 @@ AppBundle\Entity\Proposal:
             type: integer
             generator: { strategy: AUTO }
     fields:
-        number:
+        series:
+            type: integer
+        type:
             type: string
             length: 45
         createdAt:
             type: datetime
+        updatedAt:
+            type: datetime
+        approvedAt:
+            type: datetime
+            nullable: TRUE
         proposalName:
             type: string
             nullable: TRUE
