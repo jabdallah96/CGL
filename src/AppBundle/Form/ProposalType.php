@@ -26,12 +26,19 @@ class ProposalType extends AbstractType
                 'class' => Client::class,
                 'choice_label' => 'name',
             ])
-            ->add('series', NumberType::class, ['label' => 'Proposal series'])
+            ->add('series', ChoiceType::class, [
+                'choices' => Proposal::getSeriesChoices(),
+                'label' => 'Proposal series',
+            ])
             ->add('type', TextType::class, ['label' => 'Proposal type'])
             ->add('status', ChoiceType::class, [
                 'choices' => Proposal::getStatuses(),
                 'label' => 'Status:',
             ])
+            ->add('delContact', ChoiceType::class, array(
+                'choices' => Proposal::getAllContacts(),
+                'label' => 'Delegated Contact' ,
+            ))
             ->add('proposalName', FileType::class, [
                 'required' => false,
                 'label' => 'Proposal Document'
@@ -41,10 +48,9 @@ class ProposalType extends AbstractType
 //        $builder->get('proposalName')
 //            ->addModelTransformer(new CallbackTransformer(
 //                function ($proposalNameAsString) {
-//                    return new File('\'%kernel.root_dir%/../web/uploads/docs\''.'/'.$proposalNameAsString);
+//                    return new File('/Users/jad/Sites/cgl/app/../web/uploads/docs/'.$proposalNameAsString);
 //                },
 //                function ($proposalNameAsFile) {
-//                    // transform the string back to an array
 //                    return $proposalNameAsFile['path'];
 //                }
 //            ))

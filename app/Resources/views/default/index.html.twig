@@ -1,70 +1,157 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-
-    <img src="{{ asset('bundles/logo/logo.png') }}" href="http://127.0.0.1:8000/index" id="logo"/>
-
-
-    <div class="container" style="width : 95%">
-        <div class="row">
-            <div class="col-lg-5 col-md-5 col-sm-8 col-xs-9 bhoechie-tab-container">
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 bhoechie-tab-menu">
-                    <div class="list-group">
-                        <a href="#" class="list-group-item active text-center">
-                            <h4 class="glyphicon glyphicon-question-sign"></h4><br/>Proposals
-                        </a>
-                        <a href="#" class="list-group-item text-center">
-                            <h4 class="glyphicon glyphicon-check"></h4><br/>Reports
-                        </a>
-                        <a href="#" class="list-group-item text-center">
-                            <h4 class="glyphicon glyphicon-user"></h4><br/>Jobs
-                        </a>
-                        <a href="#" class="list-group-item text-center">
-                            <h4 class="glyphicon glyphicon-list-alt"></h4><br/>Stock
-                        </a>
-                        <a href="#" class="list-group-item text-center">
-                            <h4 class="glyphicon glyphicon-usd"></h4><br/>Accounting
-                        </a>
-                    </div>
+{%  block proposals %}
+        <div class="row" id="search-bar">
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for..." id="term">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" id="search-btn">Go</button>
+                    </span>
                 </div>
-                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 bhoechie-tab">
-                    <!-- flight section -->
-                    <div class="bhoechie-tab-content active">
-                        <div id="sidebar">
-                            {{ render(controller(
-                            'AppBundle:Proposal:listProposals'
-                            )) }}
-                        </div>
-                    </div>
-                    <!-- train section -->
-                    <div class="bhoechie-tab-content">
-                        <center>
+            </div>
+        </div>
+        <h3>Approved Proposals/Requests</h3>
+        <table id="approved" >
 
-                        </center>
-                    </div>
+            <th style="padding-left: 20px">
+                Reference
+            </th>
+            <th style="padding-left: 20px">
+                Date Approved
+            </th>
 
-                    <!-- hotel search -->
-                    <div class="bhoechie-tab-content">
-                        <center>
+            {% for proposal2 in approved %}
 
-                        </center>
-                    </div>
-                    <div class="bhoechie-tab-content">
-                        <center>
+                <tr>
+                    <td style="padding-left: 20px">
+                        <a href="{{ path('proposal_view', {'proposal_id': proposal2.id}) }}">{{ proposal2.reference }}</a>
+                    </td>
+                    <td style="padding-left: 20px">
+                        {% if proposal2.approvedAt %}
+                            {{ proposal2.approvedAt.format('Y-m-d') }}
+                        {% endif %}
+                    </td>
+                </tr>
 
-                        </center>
-                    </div>
-                    <div class="bhoechie-tab-content">
-                        <center>
 
-                        </center>
-                    </div>
-                </div>
+            {% endfor %}
+
+        </table>
+
+        <div style="padding-bottom: 30px">
+            <h3>Pending Proposals</h3>
+            <table id="pending">
+
+                <th style="padding-left: 20px">
+                    Reference
+                </th>
+                <th style="padding-left: 20px">
+                    Created At
+                </th>
+                <th style="padding-left: 20px">
+                    Last Edit
+                </th>
+
+                {% for proposal in pending %}
+
+
+                    <tr>
+                        <td style="padding-left: 20px">
+                            <a href="{{ path('proposal_view', {'proposal_id': proposal.id}) }}">{{ proposal.reference }}</a>
+                        </td>
+
+                        <td style="padding-left: 20px">
+                            {{ proposal.createdAt.format('Y-m-d') }}
+                        </td>
+
+                        <td style="padding-left: 20px">
+                            {{ proposal.updatedAt.format('Y-m-d') }}
+                        </td>
+                    </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+
+        <div id="add-proposal">
+
+            <div class="btn-group" role="group" aria-label="...">
+                <button type="button" class="btn btn-default" onclick="window.location.href='http://127.0.0.1:8000/proposal/new'" style="width: 167px">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    New proposal
+                </button>
+                <button type="button" class="btn btn-default" onclick="window.location.href= '{{  path('client_new', {'origin' : 'index'}) }}' " style="width: 167px">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    New client
+                </button>
+            </div>
+        </div>
+
+
+{% endblock %}
+
+
+{%  block jobs %}
+    <div class="row" id="search-bar">
+        <div class="col-lg-6">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for..." id="term">
+                <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" id="search-btn">Go</button>
+                    </span>
             </div>
         </div>
     </div>
 
+    <h3>Jobs to Be Opened</h3>
+    <table id="approved" >
+
+        <th style="padding-left: 20px">
+            Reference
+        </th>
+        <th style="padding-left: 20px">
+            Date Approved
+        </th>
+
+        {% for proposal in approved %}
+
+            <tr>
+                <td style="padding-left: 20px">
+                    {{ proposal.reference }}
+                </td>
+                <td style="padding-left: 20px">
+                    {% if proposal.approvedAt %}
+                        {{ proposal.approvedAt.format('Y-m-d') }}
+                    {% endif %}
+                </td>
+            </tr>
+
+
+        {% endfor %}
+
+    </table>
+
+    <h3>Jobs in Progress</h3>
+    <table id="approved" >
+
+        <th style="padding-left: 20px">
+            Job Number
+        </th>
+        <th style="padding-left: 20px">
+            Client
+        </th>
+        <th style="padding-left: 20px">
+            Current Status
+        </th>
+        <th style="padding-left: 20px">
+            Notes
+        </th>
+
+
+    </table>
 {% endblock %}
+
 
 {% block javascripts %}
     {{ parent() }}
@@ -79,6 +166,14 @@
                 $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
             });
         });
+    </script>
+
+    <script>
+        $("#search-btn").click(function(){
+            $term = $("#term").val();
+            $( "div.second" ).replaceWith( "<h2>New heading</h2>" );
+            window.location.href='http://127.0.0.1:8000/search/'+$term;
+        })
     </script>
 
 {% endblock %}

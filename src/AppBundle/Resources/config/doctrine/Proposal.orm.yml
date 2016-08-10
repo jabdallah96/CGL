@@ -9,6 +9,9 @@ AppBundle\Entity\Proposal:
             type: integer
             generator: { strategy: AUTO }
     fields:
+        reference:
+            type: string
+            length: 45
         series:
             type: integer
         type:
@@ -26,6 +29,9 @@ AppBundle\Entity\Proposal:
             nullable: TRUE
         status:
             type: integer
+        delContact:
+            type: string
+            nullable: TRUE
 
     manyToOne:
         client:

@@ -1,0 +1,185 @@
+{% extends 'base.html.twig' %}
+
+{% block proposals %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <button type="button" class="btn btn-default" onclick="history.go(-1);">
+                <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
+                Back
+            </button>
+        </div>
+    </div>
+
+    <h3>{{ proposal.reference }}</h3>
+    <br>
+
+    <div class="row" style="padding-left: 5%">
+        <div class="col-lg-12">
+            <table class="table table-bordered" id="proposal-data">
+                <tbody>
+                    <tr >
+                        <td id="category-left"> <b id="category-name">Client Name: </b> {{ proposal.client.name }}</td>
+
+                        <td id="category-right"> <b id="category-name">Office Number: </b> {{ proposal.client.phone }}</td>
+                    </tr>
+
+                    <tr>
+                        <td id="category-left"> <b id="category-name">Contact Name: </b> {{ proposal.client.contactPerson }}</td>
+
+                        <td id="category-right"> <b id="category-name">Mobile Number: </b> {{ proposal.client.mobile }}</td>
+                    </tr>
+
+                    <tr>
+                        <td id="category-left"> <b id="category-name">Email: </b> {{ proposal.client.email }}</td>
+
+                        <td id="category-right"> <b id="category-name">Fax Number: </b> {{ proposal.client.fax }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row" style="padding-left: 5%">
+        <div class="col-lg-12">
+            <table class="table table-bordered" id="proposal-data">
+                <tbody>
+                <tr >
+                    <td id="category-left"> <b id="category-name">Date Opened: </b> {{ proposal.createdAt.format("d F Y") }}</td>
+
+                    <td id="category-right"> <b id="category-name">Delegated Contact: </b> {{ proposal.allContactNames[proposal.delContact] }}</td>
+                </tr>
+
+                <tr>
+                    <td id="category-left"> <b id="category-name">Date Edited: </b> {{ proposal.updatedAt.format("d F Y") }}</td>
+
+                    <td id="category-right"> <b id="category-name">Proposal Type: </b> {{ proposal.type }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12" id="status-bar">
+
+            <!-- Single button -->
+            <div class="btn-group">
+                <button id="status-current" type="button" class="btn dropdown-toggle btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <t id="button-content">{{ proposal.getStatusesReverse()[proposal.status]  }}</t> <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li id="status-pending" data-id="{{ proposal.id }}" data-status="{{ proposal.getStatuses()["Pending"] }}" ><a> Pending</a></li>
+                    <li id="status-approved" data-id="{{ proposal.id }}" data-status="{{ proposal.getStatuses()["Approved"] }}"><a> Approved</a></li>
+                    <li id="status-cancelled" data-id="{{ proposal.id }}" data-status="{{ proposal.getStatuses()["Cancelled by CGL"] }}"><a> Cancelled by CGL</a></li>
+                    <li id="status-dropped" data-id="{{ proposal.id }}" data-status="{{ proposal.getStatuses()["Dropped by Client"] }}"><a> Dropped by Client</a></li>
+                    <li id="status-lost" data-id="{{ proposal.id }}" data-status="{{ proposal.getStatuses()["Lost to Competitor"] }}"><a> Lost to Competitor</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="proposal-actions">
+
+        <div class="btn-group" role="group" aria-label="...">
+            <button type="button" class="btn btn-default" onclick="window.location.href= '{{ path('proposal_edit', {'proposal_id': proposal.id}) }}' " style="width: 167px">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                Edit proposal
+            </button>
+            <button type="button" class="btn btn-default" onclick="window.location.href= '{{  path('proposal_document', {'proposal_id' : proposal.id}) }}' " style="width: 167px">
+                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                View/Print proposal
+            </button>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $("div.bhoechie-tab-menu>div.list-group>a").click(function(e) {
+                e.preventDefault();
+                $(this).siblings('a.active').removeClass("active");
+                $(this).addClass("active");
+                var index = $(this).index();
+                $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+                $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+            });
+
+
+            lastClass = $('#status-current').attr('class').split(' ').pop();
+            var status = {{ proposal.status }};
+            if( status == 0 ){
+                $('#status-current').removeClass(lastClass).addClass('btn-yellow');
+            }else if(status == 1){
+                $('#status-current').removeClass(lastClass).addClass('btn-success');
+            }else if(status == 2){
+                $('#status-current').removeClass(lastClass).addClass('btn-info');
+            }else if(status == 3){
+                $('#status-current').removeClass(lastClass).addClass('btn-warning');
+            }else{
+                $('#status-current').removeClass(lastClass).addClass('btn-danger');
+            }
+
+        });
+    </script>
+
+    <script>
+        $().dropdown('toggle');
+        var lastClass;
+
+        $("#status-pending").click(function(){
+            lastClass = $('#status-current').attr('class').split(' ').pop();
+            $('#status-current').removeClass(lastClass).addClass('btn-yellow');
+            $("#button-content").text($("#status-pending").text());
+            updateRequest( $(this).data('status') );
+        })
+
+        $("#status-approved").click(function(){
+            lastClass = $('#status-current').attr('class').split(' ').pop();
+            $('#status-current').removeClass(lastClass).addClass('btn-success');
+            $("#button-content").text($("#status-approved").text());
+            updateRequest( $(this).data('status') );
+        })
+
+        $("#status-cancelled").click(function(){
+            lastClass = $('#status-current').attr('class').split(' ').pop();
+            $('#status-current').removeClass(lastClass).addClass('btn-info');
+            $("#button-content").text($("#status-cancelled").text());
+            updateRequest( $(this).data('status') );
+        })
+
+        $("#status-dropped").click(function(){
+            lastClass = $('#status-current').attr('class').split(' ').pop();
+            $('#status-current').removeClass(lastClass).addClass('btn-warning');
+            $("#button-content").text($("#status-dropped").text());
+            updateRequest( $(this).data('status') );
+        })
+
+        $("#status-lost").click(function(){
+            lastClass = $('#status-current').attr('class').split(' ').pop();
+            $('#status-current').removeClass(lastClass).addClass('btn-danger');
+            $("#button-content").text($("#status-lost").text());
+            updateRequest( $(this).data('status') );
+        })
+
+        function updateRequest(status){
+            $.ajax({
+                url: "{{ path('proposal_status', {'proposal_id': proposal.id}) }}",
+                data: {"status": status},
+                type: "GET",
+                success: function (data) {
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('Error: ' + errorThrown);
+                }
+            });
+        }
+    </script>
+{% endblock %}

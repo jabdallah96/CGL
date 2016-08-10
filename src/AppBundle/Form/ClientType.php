@@ -25,7 +25,6 @@ class ClientType extends AbstractType
             ->add('fax', NumberType::class, ['required' => false , 'label' => 'Fax Number' ])
             ->add('mobile', NumberType::class, ['required' => false , 'label' => 'Mobile Number' ])
             ->add('email', EmailType::class , ['required' => false ])
-            ->add('delContact', TextType::class, array('label' => 'Delegated Contact' , 'required' => false))
             ->add('submit', SubmitType::class, array('label' => 'Submit'))
         ;
 

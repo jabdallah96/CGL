@@ -31,9 +31,6 @@ AppBundle\Entity\Client:
         mobile:
             type: string
             nullable: TRUE
-        delContact:
-            type: string
-            nullable: TRUE
         createdAt:
             type: datetime
         updatedAt:

@@ -356,7 +356,6 @@ class Client
     /**
      * @var string
      */
-    private $delContact;
 
 
     /**
@@ -414,20 +413,5 @@ class Client
      *
      * @return Client
      */
-    public function setDelContact($delContact)
-    {
-        $this->delContact = $delContact;
 
-        return $this;
-    }
-
-    /**
-     * Get delContact
-     *
-     * @return string
-     */
-    public function getDelContact()
-    {
-        return $this->delContact;
-    }
 }

@@ -1,12 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <img src="{{ asset('bundles/logo/logo.png') }}" onclick="window.location.href='http://127.0.0.1:8000/index'"  id="logo"/>
-
-    <div id="wrapper">
-        <div id="container">
+{% block proposals %}
             <br>
-            <button type="button" class="btn btn-default" onclick="window.location.href='http://127.0.0.1:8000/index'" style="margin-left: 30px">
+            <button type="button" class="btn btn-default" onclick="history.go(-1);" style="margin-left: 30px">
                 <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
                 Cancel
             </button>
@@ -24,7 +20,6 @@
                             </div>
                         {% else %}
                             <button type="button" class="btn btn-default" id="new-client" onclick="window.location.href= '{{ path('client_view', {'client_id' : proposal.client.id , 'proposal_id': proposal.id} ) }}' ">
-                                {#need to fetch proper client id#}
                                 <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                                 View Current
                             </button>
@@ -38,6 +33,9 @@
                     </div>
                     <div>
                         {{ form_row(form.type) }}
+                    </div>
+                    <div>
+                        {{ form_row(form.delContact) }}
                     </div>
                     <div>
                         {{ form_row(form.status) }}
@@ -62,10 +60,21 @@
 
                 {{ form_end(form) }}
             </div>
-        </div>
-    </div>
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $("div.bhoechie-tab-menu>div.list-group>a").click(function(e) {
+                e.preventDefault();
+                $(this).siblings('a.active').removeClass("active");
+                $(this).addClass("active");
+                var index = $(this).index();
+                $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+                $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+            });
+        });
+    </script>
 
 {% endblock %}

@@ -9,7 +9,18 @@ class Proposal
 {
     const PENDING = 'Pending';
     const APPROVED = 'Approved';
-    const REJECTED = 'Rejected';
+    const CANCELLED = 'Cancelled by CGL';
+    const DROPPED = 'Dropped by Client';
+    const LOST = 'Lost to Competitor';
+
+    const REPAIR = 'Repair';
+    const TRADE = 'Trade';
+    const NONINSULATED = 'Non-Insulated';
+    const INSULATED = 'Insulated';
+    const COLDROOMS = 'Coldrooms';
+
+    const SAMER = 'Samer Bou Ali';
+    const OTHER = 'Other';
 
     private $proposalName;
     private $id;
@@ -23,6 +34,8 @@ class Proposal
     private $series;
     private $type;
     private $proposalFile;
+    private $reference;
+    private $delContact;
 
     public function __construct()
     {
@@ -61,7 +74,7 @@ class Proposal
     public function setClient(\AppBundle\Entity\Client $client)
     {
         $this->client = $client;
-
+        $this->setReference( (($this->series*10000)+$this->id).$this->delContact."_".$this->createdAt->format('mY')."_".$client->getName() );
         return $this;
     }
 
@@ -123,7 +136,7 @@ class Proposal
     public function setSeries($series)
     {
         $this->series = $series;
-
+        $this->setReference( (($series*10000)+$this->id).$this->delContact."_".$this->createdAt->format('mY')."_".$this->client->getName() );
         return $this;
     }
 
@@ -149,13 +162,43 @@ class Proposal
         return [
             self::PENDING => 0,
             self::APPROVED => 1,
-            self::REJECTED => 2,
+            self::CANCELLED => 2,
+            self::DROPPED => 3,
+            self::LOST => 4,
         ];
+    }
+
+    static function getStatusesReverse()
+    {
+        return array_flip(self::getStatuses());
+    }
+    static function getSeriesChoices()
+    {
+        return [
+            self::REPAIR => 5,
+            self::TRADE => 6,
+            self::NONINSULATED => 7,
+            self::INSULATED => 8,
+            self::COLDROOMS => 9,
+        ];
+    }
+
+    static function getAllContacts()
+    {
+        return [
+            self::SAMER => 'SB',
+            self::OTHER => 'OT',
+        ];
+    }
+    static function getAllContactNames()
+    {
+        return array_flip(self::getAllContacts());
     }
 
     public function setProposalName($proposalName)
     {
         $this->proposalName = $proposalName;
+
         return $this;
     }
 
@@ -183,5 +226,29 @@ class Proposal
             $this->approvedAt = new \DateTimeImmutable();
         }
     }
+
+    public function getReference()
+    {
+        return $this->reference;
+    }
+
+    public function setReference($reference)
+    {
+        $this->reference = $reference;
+    }
+
+    public function setDelContact($delContact)
+    {
+        $this->delContact = $delContact;
+        $this->setReference( (($this->series*10000)+$this->id).$delContact."_".$this->createdAt->format('mY')."_".$this->client->getName() );
+        return $this;
+    }
+
+
+    public function getDelContact()
+    {
+        return $this->delContact;
+    }
+
 
 }
