@@ -37,6 +37,7 @@ class Job
      */
     private $updatedAt;
 
+    private $proposal;
 
     /**
      * Get id
@@ -224,5 +225,21 @@ class Job
     public function getJor()
     {
         return $this->jor;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProposal()
+    {
+        return $this->proposal;
+    }
+
+    /**
+     * @param mixed $proposal
+     */
+    public function setProposal($proposal)
+    {
+        $this->proposal = $proposal;
     }
 }

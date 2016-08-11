@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block proposals %}
+    <br>
+    <button type="button" class="btn btn-default" onclick="history.go(-1);" style="margin-left: 30px">
+        <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
+        Cancel
+    </button>
+    <div>
+        {{ form_start(form) }}
+        <div>
+            {{ form_row(form.proposal) }}
+
+
+        </div>
+        
+        <div>
+            {{ form_row(form.submit) }}
+        </div>
+
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $("div.bhoechie-tab-menu>div.list-group>a").click(function(e) {
+                e.preventDefault();
+                $(this).siblings('a.active').removeClass("active");
+                $(this).addClass("active");
+                var index = $(this).index();
+                $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+                $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+            });
+        });
+    </script>
+
+{% endblock %}

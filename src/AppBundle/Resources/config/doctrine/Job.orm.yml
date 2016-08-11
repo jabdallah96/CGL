@@ -10,25 +10,37 @@ AppBundle\Entity\Job:
     fields:
         number:
             type: integer
+            nullable: true
         delivery:
             type: datetime
+            nullable: true
         billOfQuantities:
             type: blob
+            nullable: true
         createdAt:
             type: datetime
+            nullable: true
         updatedAt:
             type: datetime
+            nullable: true
 
     oneToOne:
             vehicle:
                 targetEntity: Vehicle
-                inversedBy: proposal
+                inversedBy: job
                 joinColumn:
                     name: vehicle_id
                     referencedColumnName: vin
             jor:
                 targetEntity: JobOpeningRequest
-                inversedBy: proposal
+                inversedBy: job
                 joinColumn:
                     name: jor_id
+                    referencedColumnName: id
+
+            proposal:
+                targetEntity: Proposal
+                inversedBy: job
+                joinColumn:
+                    name: proposal_id
                     referencedColumnName: id

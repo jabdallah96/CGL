@@ -40,9 +40,3 @@ AppBundle\Entity\Proposal:
             joinColumn:
                 name: client_id
                 referencedColumnName: id
-        job:
-            targetEntity: Job
-            inversedBy: proposal
-            joinColumn:
-                name: job_id
-                referencedColumnName: id

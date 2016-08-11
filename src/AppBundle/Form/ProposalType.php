@@ -21,7 +21,6 @@ class ProposalType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            //Need to add client, should I add the option to choose from existing? If so, how should I make it look alongside the create client form
             ->add('client', EntityType::class, [
                 'class' => Client::class,
                 'choice_label' => 'name',

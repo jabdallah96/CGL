@@ -99,7 +99,10 @@ button.btn-yellow:active {
     padding-bottom: 2%;
 }
 
-
+#date-current{
+    padding-left: 60%;
+    padding-top: 4%;
+}
 
 #category-right{
     padding-left: 17%;
