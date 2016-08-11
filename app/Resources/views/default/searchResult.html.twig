@@ -16,7 +16,7 @@
 
             <tr>
                 <td style="padding-left: 20px">
-                    <a href="{{ path('proposal_edit', {'proposal_id': proposal.id}) }}">{{ proposal.reference }}</a>
+                    <a href="{{ path('proposal_view', {'proposal_id': proposal.id}) }}">{{ proposal.reference }}</a>
                 </td>
                 <td style="padding-left: 20px">
                     {% if proposal.approvedAt %}
@@ -44,6 +44,8 @@
                 $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
                 $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
             });
+
+            changeTab('proposal');
         });
     </script>
 

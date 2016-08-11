@@ -414,4 +414,43 @@ class Client
      * @return Client
      */
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $request_job;
+
+
+    /**
+     * Add requestJob
+     *
+     * @param \AppBundle\Entity\RequestJob $requestJob
+     *
+     * @return Client
+     */
+    public function addRequestJob(\AppBundle\Entity\RequestJob $requestJob)
+    {
+        $this->request_job[] = $requestJob;
+
+        return $this;
+    }
+
+    /**
+     * Remove requestJob
+     *
+     * @param \AppBundle\Entity\RequestJob $requestJob
+     */
+    public function removeRequestJob(\AppBundle\Entity\RequestJob $requestJob)
+    {
+        $this->request_job->removeElement($requestJob);
+    }
+
+    /**
+     * Get requestJob
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRequestJob()
+    {
+        return $this->request_job;
+    }
 }

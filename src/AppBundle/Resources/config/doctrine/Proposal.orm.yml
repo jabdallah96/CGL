@@ -40,3 +40,4 @@ AppBundle\Entity\Proposal:
             joinColumn:
                 name: client_id
                 referencedColumnName: id
+

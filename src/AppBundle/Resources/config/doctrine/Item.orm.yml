@@ -1,0 +1,32 @@
+# src/AppBundle/Resources/config/doctrine/Item.orm.yml
+AppBundle\Entity\Item:
+    type: entity
+    table: item
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        quantity:
+            type: integer
+        code:
+            type: integer
+            nullable: true
+        details:
+            type: string
+            length: 250
+            nullable: true
+        unit:
+            type: integer
+            nullable: true
+        total:
+            type: integer
+            nullable: true
+
+    manyToOne:
+        request_job:
+            targetEntity: RequestJob
+            inversedBy: item
+            joinColumn:
+                name: request_job_id
+                referencedColumnName: id

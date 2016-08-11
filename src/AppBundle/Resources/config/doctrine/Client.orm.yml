@@ -44,3 +44,10 @@ AppBundle\Entity\Client:
             joinColumn:
                 name: proposal_id
                 referencedColumnName: id
+
+        request_job:
+            targetEntity: RequestJob
+            mappedBy: client
+            joinColumn:
+                name: request_job_id
+                referencedColumnName: id

@@ -109,6 +109,12 @@ button.btn-yellow:active {
     width: 48%;
 }
 
+div.item-form{
+    padding-left: 3%;
+    padding-bottom: 2%;
+}
+
+
 tr:hover {
     background-color: #f2f2f2;
     display: table-row;

@@ -112,6 +112,7 @@
                 $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
             });
 
+            changeTab('proposal');
 
             lastClass = $('#status-current').attr('class').split(' ').pop();
             var status = {{ proposal.status }};

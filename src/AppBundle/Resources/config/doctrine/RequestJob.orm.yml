@@ -1,0 +1,39 @@
+# src/AppBundle/Resources/config/doctrine/RequestJob.orm.yml
+AppBundle\Entity\RequestJob:
+
+    type: entity
+    table: request_job
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        contact:
+            type: string
+            length: 45
+            nullable: true
+        visit_date:
+            type: date
+            nullable: true
+        job_type:
+            type: string
+            length: 15
+            nullable: true
+
+    oneToMany:
+        item:
+            targetEntity: Item
+            mappedBy: request_job
+            joinColumn:
+                name: item_id
+                referencedColumnName: id
+            cascade: [persist]
+
+    manyToOne:
+        client:
+            targetEntity: Client
+            inversedBy: request_job
+            joinColumn:
+                name: client_id
+                referencedColumnName: id
+

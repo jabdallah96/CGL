@@ -356,7 +356,6 @@ class Client
     /**
      * @var string
      */
-    private $delContact;
 
 
     /**
@@ -414,20 +413,44 @@ class Client
      *
      * @return Client
      */
-    public function setDelContact($delContact)
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $request_job;
+
+
+    /**
+     * Add requestJob
+     *
+     * @param \AppBundle\Entity\RequestJob $requestJob
+     *
+     * @return Client
+     */
+    public function addRequestJob(\AppBundle\Entity\RequestJob $requestJob)
     {
-        $this->delContact = $delContact;
+        $this->request_job[] = $requestJob;
 
         return $this;
     }
 
     /**
-     * Get delContact
+     * Remove requestJob
      *
-     * @return string
+     * @param \AppBundle\Entity\RequestJob $requestJob
      */
-    public function getDelContact()
+    public function removeRequestJob(\AppBundle\Entity\RequestJob $requestJob)
     {
-        return $this->delContact;
+        $this->request_job->removeElement($requestJob);
+    }
+
+    /**
+     * Get requestJob
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRequestJob()
+    {
+        return $this->request_job;
     }
 }

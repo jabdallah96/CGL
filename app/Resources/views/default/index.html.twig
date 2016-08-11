@@ -144,7 +144,7 @@
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 Add Job
             </button>
-            <button type="button" class="btn btn-default" onclick="" style="width: 167px">
+            <button type="button" class="btn btn-default" onclick="window.location.href='{{ path('request_job_new') }}'" style="width: 167px">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 Request approval
             </button>
@@ -184,6 +184,7 @@
                 $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
                 $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
             });
+            changeTab('proposal');
         });
     </script>
 
@@ -192,7 +193,11 @@
         $("#search-btn").click(function(){
             $term = $("#term").val();
             $( "div.second" ).replaceWith( "<h2>New heading</h2>" );
-            window.location.href='http://127.0.0.1:8000/search/'+$term;
+            if(!$term){
+                alert("No search term was entered");
+            }else{
+                window.location.href='http://127.0.0.1:8000/search/'+$term;
+            }
         })
     </script>
 

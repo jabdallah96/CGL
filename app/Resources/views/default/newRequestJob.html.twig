@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block jobs %}
+    <br>
+    <button type="button" class="btn btn-default" onclick="history.go(-1);" style="margin-left: 30px">
+        <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
+        Cancel
+    </button>
+    <div>
+        {{ form_start(form) }}
+        <div>
+            {{ form_row(form.client) }}
+        </div>
+        <div>
+            {{ form_row(form.visit_date) }}
+        </div>
+        <div>
+            {{ form_row(form.contact) }}
+        </div>
+        <div>
+            {{ form_row(form.job_type) }}
+        </div>
+
+        <div class="items" data-prototype="{{ form_widget(form.item.vars.prototype)|e('html_attr') }}">
+            {{ form_row(form.item) }}
+        </div>
+
+        <br>
+
+        <div>
+            {{ form_row(form.submit) }}
+        </div>
+
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $("div.bhoechie-tab-menu>div.list-group>a").click(function(e) {
+                e.preventDefault();
+                $(this).siblings('a.active').removeClass("active");
+                $(this).addClass("active");
+                var index = $(this).index();
+                $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+                $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+            });
+
+            changeTab('job');
+        });
+    </script>
+
+    <script>
+        var $collectionHolder;
+
+        var $addItemLink = $('<button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Item </button>');
+        var $newLinkLi = $('<div></div>').append($addItemLink);
+
+        jQuery(document).ready(function () {
+
+            $collectionHolder = $('div.items');
+            $collectionHolder.append($newLinkLi);
+            $collectionHolder.data('index', $collectionHolder.find(':input').length);
+            $addItemLink.on('click', function (e) {
+                e.preventDefault();
+                addItemForm($collectionHolder, $newLinkLi);
+            });
+        });
+
+        function addItemForm($collectionHolder, $newLinkLi) {
+            var prototype = $collectionHolder.data('prototype');
+            var index = $collectionHolder.data('index');
+            var newForm = prototype.replace(/__name__/g, index);
+            $collectionHolder.data('index', index + 1);
+            var $newFormLi = $('<div class="item-form" ></div>').append(newForm);
+            $newLinkLi.before($newFormLi);
+            addItemFormDeleteLink($newFormLi);
+        }
+
+        function addItemFormDeleteLink($itemFormLi) {
+            var $removeFormA = $('<button type="button" class="btn btn-default"> <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove</button>');
+            $itemFormLi.append($removeFormA);
+
+            $removeFormA.on('click', function(e) {
+                e.preventDefault();
+                $itemFormLi.remove();
+            });
+        }
+    </script>
+
+{% endblock %}
